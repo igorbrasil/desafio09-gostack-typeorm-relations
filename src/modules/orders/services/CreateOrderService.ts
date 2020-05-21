@@ -49,8 +49,20 @@ class CreateProductService {
 
     const productsInOrder = await this.productsRepository.findAllById(ids);
     if (productsInOrder.length !== products.length) {
-      throw new AppError('Algum produto não foi encontrado');
+      throw new AppError('Product not found!');
     }
+
+    products.forEach(prodRecei => {
+      let quantity = productsInOrder.find(
+        productItem => productItem.id === prodRecei.id,
+      )?.quantity;
+      if (!quantity) {
+        quantity = 0;
+      }
+      if (prodRecei.quantity > quantity) {
+        throw new AppError('Quantity');
+      }
+    });
 
     const productsOrder = products.map(product => {
       let price = productsInOrder.find(
