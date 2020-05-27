@@ -39,7 +39,7 @@ class CreateProductService {
     const customer = await this.customersRepository.findById(customer_id);
 
     if (!customer) {
-      throw new AppError('Customer not find');
+      throw new AppError('Customer not found');
     }
     const ids = products.map(product => {
       return {
